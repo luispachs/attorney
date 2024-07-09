@@ -71,6 +71,12 @@ This project is a web application for managing attorneys and their related price
 
 A price map can be either a combination of all the criteria (county, court, violation, and points) or partial criteria (one or more of them). For example, an attorney can have a price per points for a specific county and a specific price per points for a particular court. **The price is always calculated per points**.
 
+### Design Patterns
+
+Feel free to incorporate design patterns into the modelization of this system like factories, observers, singletons...
+Using design patterns can improve the code's readability, maintainability, and scalability.
+
+
 ### Additional Steps
 - Write tests: Ensure your code is covered by integration tests (optional)
 - Add styling: Use @mui/material for components styling (mandatory)
