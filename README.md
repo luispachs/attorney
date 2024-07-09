@@ -71,6 +71,51 @@ This project is a web application for managing attorneys and their related price
 
 A price map can be either a combination of all the criteria (county, court, violation, and points) or partial criteria (one or more of them). For example, an attorney can have a price per points for a specific county and a specific price per points for a particular court. **The price is always calculated per points**.
 
+
+### JSON Price Map Example
+
+Below is an example of a JSON price map which shows a mix between a price per court/points, county/points, and violation/points:
+
+```json
+{
+  "attorneyId": "60c72b2f9b1e8b6a6c8b4567",
+  "prices": [
+    {
+      "courtId": "60c72b2f9b1e8b6a6c8b4568", // Court Name Queens Municipal Court
+      "pointsRange": [1, 4],
+      "price": 250
+    },
+    {
+      "courtId": "60c72b2f9b1e8b6a6c8b4568", // Court Name Queens Municipal Court
+      "pointsRange": [5, 12],
+      "price": 350
+    },
+    {
+      "countyId": "60c72b2f9b1e8b6a6c8b4569", // New York
+      "pointsRange": [1, 7],
+      "price": 150
+    },
+    {
+      "countyId": "60c72b2f9b1e8b6a6c8b4569", // New York
+      "pointsRange": [7, 12],
+      "price": 150
+    },
+    {
+      "violationId": "60c72b2f9b1e8b6a6c8b456a", // IMPROPER PASSING
+      "price": 290
+    },
+    {
+      "violationId": "60c72b2f9b1e8b6a6c8b456a", // DRIVING ON SHOULDER
+      "price": 380
+    },
+    {
+      "violationId": "60c72b2f9b1e8b6a6c8b456a", // NO SEAT BELT (MINOR)
+      "price": 500
+    }
+  ]
+}
+```
+
 ### Design Patterns
 
 Feel free to incorporate design patterns into the modelization of this system like factories, observers, singletons...
