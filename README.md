@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Attorney Price Management System
+
+## Overview
+
+This project is a web application for managing attorneys and their related price maps per county/court/violation/points. The application is built using Next.js for the frontend, MobX for state management, and Mongoose for database interactions with MongoDB.
+
+## Features
+
+- Manage attorneys and their details.
+- Associate attorneys with different prices based on county, court, violation and points.
+- Perform CRUD operations on attorneys and prices.
+- Data persistence using MongoDB.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (version 20.x or later)
+- MongoDB (local, remote instance or dockerized)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+1. **Clone the repository:**
+    ```bash
+    git clone https://github.com/samtarbury/attorney-crud.git
+    cd attorney-crud
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2. **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-## Learn More
+3. **Set up environment variables:**
 
-To learn more about Next.js, take a look at the following resources:
+   Create a `.env` file in the root directory and add your MongoDB connection string:
+    ```env
+    MONGODB_URI=mongodb://your-mongo-db-uri
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Run the application:**
+    ```bash
+    npm run dev
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   The application will be available at `http://localhost:3000`.
 
-## Deploy on Vercel
+5. ## Instructions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Completing the API
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. **Define Mongoose Schemas:**
+    - Ensure all required schemas (`Attorney`, `AttorneyPrice`, `TrafficCourt`, `TrafficCounty`, and `Violation`) are defined in the `models` directory and feel free to add or modify attributes
+
+2. **Set up API routes:**
+    - Complete the CRUD operations for each entity in the `pages/api` directory. Ensure that each API route handles requests to create, read, update, and delete records.
+    - Use `dbConnect.js` to establish a connection to MongoDB.
+
+### Writing React Components with Next.js
+
+1. **Create Components:**
+    - In the `pages` directory, create pages and components to display, create, and edit attorneys and their price maps.
+    - Use Next.js features like dynamic routing and API routes to interact with the backend.
+
+2. **Use MobX for State Management:**
+    - Define MobX stores in the `stores` directory to manage the application state.
+    - Use the `attorneyStore` to manage attorney data and `attorneyPriceStore` to manage attorney price data.
+    - Fetch data from the API and update the stores accordingly.
+
+### Understanding Price Maps
+
+A price map can be either a combination of all the criteria (county, court, violation, and points) or partial criteria (one or more of them). For example, an attorney can have a price per points for a specific county and a specific price per points for a particular court. **The price is always calculated per points**.
+
+### Additional Steps
+- Write tests: Ensure your code is covered by integration tests (optional)
+- Add styling: Use @mui/material for components styling (mandatory)
