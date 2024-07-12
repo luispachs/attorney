@@ -1,6 +1,6 @@
 import { alpha } from '@mui/system/colorManipulator'
-import { neutral } from '../../themes/colors'
-import basePalette from '../../themes/base/palette'
+import { neutral } from '@/themes/colors'
+import basePalette from '@/themes/base/palette'
 
 const palette = {
   mode: 'dark',

@@ -1,5 +1,5 @@
 import { types } from 'mobx-state-tree'
-import {THEME_TYPES} from "@/constants"
+import { THEME_TYPES } from '@/constants'
 
 const ThemeStore = types
   .model('ThemeStore', {

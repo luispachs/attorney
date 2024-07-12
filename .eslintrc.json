@@ -1,3 +1,9 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "prettier"],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "babelOptions": {
+      "plugins": [["@babel/plugin-proposal-decorators", { "version": "2023-11" }]]
+    }
+  }
 }
