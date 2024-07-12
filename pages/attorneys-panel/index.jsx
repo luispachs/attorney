@@ -1,4 +1,2 @@
-const AttorneysPanelPage = () => {
-}
-export default (AttorneysPanelPage)
-
+const AttorneysPanelPage = () => {}
+export default AttorneysPanelPage
