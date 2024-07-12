@@ -21,27 +21,31 @@ This project is a web application for managing attorneys and their related price
 ### Installation
 
 1. **Clone the repository:**
-    ```bash
-    git clone https://github.com/samtarbury/attorney-crud.git
-    cd attorney-crud
-    ```
+
+   ```bash
+   git clone https://github.com/samtarbury/attorney-crud.git
+   cd attorney-crud
+   ```
 
 2. **Install dependencies:**
-    ```bash
-    npm install
-    ```
+
+   ```bash
+   npm install
+   ```
 
 3. **Set up environment variables:**
 
    Create a `.env` file in the root directory and add your MongoDB connection string:
-    ```env
-    MONGODB_URI=mongodb://your-mongo-db-uri
-    ```
+
+   ```env
+   MONGODB_URI=mongodb://your-mongo-db-uri
+   ```
 
 4. **Run the application:**
-    ```bash
-    npm run dev
-    ```
+
+   ```bash
+   npm run dev
+   ```
 
    The application will be available at `http://localhost:3000`.
 
@@ -50,27 +54,29 @@ This project is a web application for managing attorneys and their related price
 ### Completing the API
 
 1. **Define Mongoose Schemas:**
-    - Ensure all required schemas (`Attorney`, `AttorneyPrice`, `TrafficCourt`, `TrafficCounty`, and `Violation`) are defined in the `models` directory and feel free to add or modify attributes
+
+   - Ensure all required schemas (`Attorney`, `AttorneyPrice`, `TrafficCourt`, `TrafficCounty`, and `Violation`) are defined in the `models` directory and feel free to add or modify attributes
 
 2. **Set up API routes:**
-    - Complete the CRUD operations for each entity in the `pages/api` directory. Ensure that each API route handles requests to create, read, update, and delete records.
-    - Use `dbConnect.js` to establish a connection to MongoDB.
+   - Complete the CRUD operations for each entity in the `pages/api` directory. Ensure that each API route handles requests to create, read, update, and delete records.
+   - Use `dbConnect.js` to establish a connection to MongoDB.
 
 ### Writing React Components with Next.js
 
 1. **Create Components:**
-    - In the `pages` directory, create pages and components to display, create, and edit attorneys and their price maps.
-    - Use Next.js features like dynamic routing and API routes to interact with the backend.
+
+   - In the `pages` directory, create pages and components to display, create, and edit attorneys and their price maps.
+   - Use Next.js features like dynamic routing and API routes to interact with the backend.
+   - Some components will be written as classes, feel free to change to function components, if needed.
 
 2. **Use MobX for State Management:**
-    - Define MobX stores in the `stores` directory to manage the application state.
-    - Use the `attorneyStore` to manage attorney data and `attorneyPriceStore` to manage attorney price data.
-    - Fetch data from the API and update the stores accordingly.
+   - Define MobX stores (using exclusively `mobx-state-tree` syntax) in the `stores` directory to manage the application state.
+   - Use the `attorneyStore` to manage attorney data and `attorneyPriceStore` to manage attorney price data.
+   - Fetch data from the API and update the stores accordingly.
 
 ### Understanding Price Maps
 
 A price map can be either a combination of all the criteria (county, court, violation, and points) or partial criteria (one or more of them). For example, an attorney can have a price per points for a specific county and a specific price per points for a particular court. **The price is always calculated per points**.
-
 
 ### JSON Price Map Example
 
@@ -121,7 +127,7 @@ Below is an example of a JSON price map which shows a mix between a price per co
 Feel free to incorporate design patterns into the modelization of this system like factories, observers, singletons...
 Using design patterns can improve the code's readability, maintainability, and scalability.
 
-
 ### Additional Steps
+
 - Write tests: Ensure your code is covered by integration tests (optional)
 - Add styling: Use @mui/material for components styling (mandatory)
