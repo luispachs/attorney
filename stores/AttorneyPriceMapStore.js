@@ -1,5 +1,5 @@
-import {types, flow, getRoot} from "mobx-state-tree"
-import AttorneyPrice from "./models/AttorneyPrice"
+import {types, flow} from "mobx-state-tree"
+import AttorneyPrice from "@/stores/models/AttorneyPrice"
 
 const AttorneyPriceMapStore = types
     .model("AttorneyPriceMapStore", {

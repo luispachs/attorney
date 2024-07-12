@@ -1,4 +1,4 @@
-import { neutral, primary, info, success, warning, error } from '../../themes/colors'
+import { neutral, primary, info, success, warning, error } from '@/themes/colors'
 
 const palette = {
   neutral,

@@ -1,7 +1,7 @@
 import { alpha } from '@mui/system/colorManipulator'
 import { common } from '@mui/material/colors'
 import { neutral } from '@/themes/colors'
-import basePalette from '../../themes/base/palette'
+import basePalette from '@/themes/base/palette'
 
 const palette = {
   mode: 'light',

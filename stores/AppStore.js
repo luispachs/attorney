@@ -1,5 +1,5 @@
 import { types } from 'mobx-state-tree'
-import ThemeStore from "./ThemeStore"
+import ThemeStore from "@/stores/ThemeStore"
 import AttorneyStore from "@/stores/AttorneyStore"
 import AttorneyPriceMapStore from "@/stores/AttorneyPriceMapStore"
 
