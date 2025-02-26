@@ -1,8 +1,6 @@
-import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme } from '@mui/material/styles'
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     primary: {
       main: '#1976d2',
@@ -42,13 +40,4 @@ const theme = createTheme({
       }
     }
   }
-})
-
-export default function ThemeProvider({ children }) {
-  return (
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      {children}
-    </MuiThemeProvider>
-  )
-}
+}) 
