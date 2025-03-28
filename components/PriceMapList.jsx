@@ -7,7 +7,8 @@ import {
   ListItemSecondaryAction,
   IconButton,
   Paper,
-  Typography
+  Typography,
+  Grid
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 
@@ -45,15 +46,16 @@ const PriceMapList = observer(({ prices, type, onDelete }) => {
       <List>
         {filteredPrices.map((price) => (
           <ListItem key={price.id}>
-            <ListItemText
-              primary={
-                `
-                ${price.county?.name?"Name: "+price.county?.name:""}
-                ${price.county?.stateShortName?"Short Name: "+price.county?.stateShortName:""}
-                ${price.violation?.name?"Violation: "+price.violation?.name:""} ${price.court?.name?"Name: "+price.court?.name:""}   ${price.court?.address?"Address: "+price.court?.address:""} Valor: $${price.price}`
-              }
-              secondary={price.displayRange}
-            />
+            <Grid item>
+                {price.county?.name?<Typography>{"Name: "+price.county?.name}</Typography>:""}
+                {price.county?.stateShortName?<Typography>{"Short Name: "+price.county.stateShortName}</Typography>:""}
+                {price.violation?.name?<Typography>{"Violation: "+price.violation.name}</Typography>:""}
+                {price.court?.address?<Typography>{"Address: "+price.court?.address}</Typography>:""}
+                <Typography>{"Price: "+price.price}</Typography>
+                <Typography>{`Points: Min ${price.pointsRange?.min??""} - Max  ${price.pointsRange?.max??""}`}</Typography>
+
+                
+            </Grid>
             <ListItemSecondaryAction>
               <IconButton edge="end" onClick={() => onDelete(price.id)}>
                 <DeleteIcon />
