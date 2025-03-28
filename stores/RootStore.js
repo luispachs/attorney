@@ -102,6 +102,9 @@ const RootStore = types
       violationById(id){
         return self.reference.violationById(id);
       },
+      attorneyById(id){
+       return  self.attorney.getById(id);
+      }
     }
   ))
 

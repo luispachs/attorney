@@ -1,5 +1,5 @@
 import dbConnect from '@/lib/dbConnect'
-import AttorneyPrice from '@/db-schemas/AttorneyPrice'
+import AttorneyPrice from '@/db-schemas/AttorneyPriceMap'
 
 export default async function handler(req, res) {
   const { id } = req.query
@@ -8,16 +8,25 @@ export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        const price = await AttorneyPrice.findById(id)
-          .populate('attorneyId')
-          .populate('courtId')
-          .populate('countyId')
-          .populate('violationId')
+        
+        const price = await AttorneyPrice.find({})
+        .populate('attorney')
+        .populate({path:"court",populate:{path:'trafficCounty'}})
+        .populate({path:'county'})
+        .populate({path:'violation'})
+        
+     
         if (!price) {
           return res.status(404).json({ error: 'Price not found' })
         }
-        res.status(200).json(price)
+
+        const filterPrice = price.filter(elem=>{
+          return elem.attorney._id == id
+        })
+        
+        res.status(200).json(filterPrice)
       } catch (error) {
+       
         res.status(500).json({ error: 'Failed to fetch price' })
       }
       break

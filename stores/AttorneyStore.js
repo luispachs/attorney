@@ -8,7 +8,10 @@ const Attorney = createBaseModel('Attorney', {
   email: types.string,
   phone: types.maybeNull(types.string),
   address: types.maybeNull(types.string),
-  isActive: types.optional(types.boolean, true)
+  isActive: types.optional(types.boolean, true),
+  createdAt: types.optional(types.string, ""),
+  updatedAt: types.optional(types.string, ""),
+  
 })
 
 // Fonction utilitaire pour transformer les données MongoDB
@@ -20,14 +23,17 @@ const transformMongoData = (data) => {
     phone: data.phone || null,
     address: data.address || null,
     isActive: data.isActive,
-    createdAt: new Date(data.createdAt),
-    updatedAt: new Date(data.updatedAt)
+    createdAt: data.createdAt,
+    updatedAt: data.updatedAt
   }
 }
 
 const AttorneyStore = createCrudStore('AttorneyStore', Attorney, '/api/attorneys')
   .views((self) => ({
-    // Add views here
+      getById(id){
+
+        return self.items.find(elem => elem.id ==id)
+      }
   }))
   .actions((self) => ({
     setLoading(state) {

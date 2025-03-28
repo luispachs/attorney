@@ -50,7 +50,10 @@ const createBaseStore = (name, Model, endpoint) => {
         } finally {
           self.setLoading(false)
         }
-      })
+      }),
+      add(item){
+        self.items.push(item)
+      }
     }))
 }
 

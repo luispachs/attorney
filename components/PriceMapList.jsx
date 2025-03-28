@@ -11,15 +11,20 @@ import {
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 
+
 const PriceMapList = observer(({ prices, type, onDelete }) => {
+
+
+
   const filteredPrices = prices.filter(price => {
+     
     switch (type) {
       case 'court':
-        return price.courtId
+        return price.court
       case 'county':
-        return price.countyId
+        return price.county
       case 'violation':
-        return price.violationId
+        return price.violation
       default:
         return false
     }
@@ -41,7 +46,12 @@ const PriceMapList = observer(({ prices, type, onDelete }) => {
         {filteredPrices.map((price) => (
           <ListItem key={price.id}>
             <ListItemText
-              primary={`$${price.price}`}
+              primary={
+                `
+                ${price.county?.name?"Name: "+price.county?.name:""}
+                ${price.county?.stateShortName?"Short Name: "+price.county?.stateShortName:""}
+                ${price.violation?.name?"Violation: "+price.violation?.name:""} ${price.court?.name?"Name: "+price.court?.name:""}   ${price.court?.address?"Address: "+price.court?.address:""} Valor: $${price.price}`
+              }
               secondary={price.displayRange}
             />
             <ListItemSecondaryAction>

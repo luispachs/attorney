@@ -1,15 +1,16 @@
 import { observer } from 'mobx-react'
 import { Box, Typography, Button, Tabs, Tab } from '@mui/material'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import PriceMapList from './PriceMapList'
 import PriceMapDialog from './PriceMapDialog'
+import { AttorneyContext } from '@/stores/providers/AttorneyProvider'
 
-const PriceMapPanel = observer(({ attorneyId, store }) => {
+const PriceMapPanel = observer(({ attorney, store }) => {
   const [tabValue, setTabValue] = useState('court')
   const [dialogOpen, setDialogOpen] = useState(false)
   const { attorneyPrice } = store
 
-  const prices = attorneyPrice.getPriceMapForAttorney(attorneyId)
+  const prices = attorneyPrice.getPriceMapForAttorney(attorney.id)
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue)
@@ -25,10 +26,13 @@ const PriceMapPanel = observer(({ attorneyId, store }) => {
 
   const handleSavePrice = async (data) => {
     try {
-      await attorneyPrice.createPrice({
+      let attorneyId = attorney._id;
+  
+      let res = await attorneyPrice.createPrice({
         ...data,
         attorneyId
       })
+  
       handleCloseDialog()
     } catch (error) {
       console.error('Failed to save price:', error)
@@ -57,20 +61,23 @@ const PriceMapPanel = observer(({ attorneyId, store }) => {
         <Tab label="Counties" value="county" />
         <Tab label="Violations" value="violation" />
       </Tabs>
+      <AttorneyContext.Provider value={attorney}>
+        <PriceMapList
+          prices={prices}
+          type={tabValue}
+          onDelete={handleDeletePrice}
+        />
+      
 
-      <PriceMapList
-        prices={prices}
-        type={tabValue}
-        onDelete={handleDeletePrice}
-      />
+        <PriceMapDialog
+          open={dialogOpen}
+          onClose={handleCloseDialog}
+          onSave={handleSavePrice}
+          type={tabValue}
+          store={store}
+        />
+      </AttorneyContext.Provider>
 
-      <PriceMapDialog
-        open={dialogOpen}
-        onClose={handleCloseDialog}
-        onSave={handleSavePrice}
-        type={tabValue}
-        store={store}
-      />
     </Box>
   )
 })

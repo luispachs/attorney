@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         const violations = await Violation.find({})
         res.status(200).json(violations)
       } catch (error) {
-        console.log(error);
+  
         res.status(500).json({ error: 'Failed to fetch violations' })
       }
       break
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     case 'POST':
       try {
         const violation = await Violation.create(req.body)
-        console.log(violation)
+      
         res.status(201).json({message:"",data:{violation}})
       } catch (error) {
         

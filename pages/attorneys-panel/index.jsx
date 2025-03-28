@@ -22,7 +22,8 @@ class AttorneysPanelPage extends Component {
       address: '',
       isActive: true
     },
-    selectedAttorneyId: null
+    selectedAttorneyId: null,
+    attorney:null
   }
 
   componentDidMount() {
@@ -86,7 +87,8 @@ class AttorneysPanelPage extends Component {
   }
 
   handleSelectAttorney = (attorneyId) => {
-    this.setState({ selectedAttorneyId: attorneyId })
+    let selectAttorney = this.props.store.attorneyById(attorneyId);
+    this.setState({ selectedAttorneyId: attorneyId,attorney:selectAttorney })
     if (attorneyId) {
       this.props.store.attorneyPrice.fetchPriceMap(attorneyId)
     }
@@ -98,6 +100,10 @@ class AttorneysPanelPage extends Component {
     const { attorney } = this.props.store
     const { items: attorneys, loading, error } = attorney
     const { dialogOpen, formData, currentAttorney, selectedAttorneyId } = this.state
+   
+  
+
+    
 
     if (loading && !dialogOpen) {
       return (
@@ -160,7 +166,7 @@ class AttorneysPanelPage extends Component {
           {selectedAttorneyId && (
             <Grid item xs={12} md={6}>
               <PriceMapPanel 
-                attorneyId={selectedAttorneyId}
+                attorney={this.state.attorney}
                 store={this.props.store}
               />
             </Grid>

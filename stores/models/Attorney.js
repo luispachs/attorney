@@ -8,8 +8,8 @@ const Attorney = types
     phone: types.maybeNull(types.string),
     address: types.maybeNull(types.string),
     isActive: types.optional(types.boolean, true),
-    createdAt: types.optional(types.Date, () => new Date()),
-    updatedAt: types.optional(types.Date, () => new Date())
+    createdAt: types.optional(types.string,""),
+    updatedAt: types.optional(types.string, "")
   })
   .actions(self => ({
     update(data) {

@@ -55,7 +55,7 @@ class ViolationFormUpdate extends Component{
                 alert:"success"
             })
         }catch(error){
-            console.log(error)
+            
             this.setState(
                 {
                     alertModal:true,

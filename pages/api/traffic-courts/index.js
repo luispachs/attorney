@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         const courts = await TrafficCourt.find({}).populate('trafficCounty').exec()
         res.status(200).json(courts)
       } catch (error) {
-        console.log(error)
+   
         res.status(500).json({ error: 'Failed to fetch traffic courts' })
       }
       break
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         let courtWithCounty = await TrafficCourt.findById(court._id).populate("trafficCounty")
         res.status(201).json({message:"Creation Successfull",data:{court:courtWithCounty}})
       } catch (error) {
-        console.log(error);
+       
         res.status(400).json({ error: 'Failed to create traffic court' })
       }
       break

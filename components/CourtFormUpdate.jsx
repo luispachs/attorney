@@ -35,9 +35,10 @@ class CourtFormUpdate extends Component{
     selecthandle =(changeEvent)=>{
        let auxState =this.state;
        auxState.selectedValue = changeEvent.target.value;
-       console.log(auxState)
+ 
        let county = this.props.store.reference.countyById(changeEvent.target.value);
-       console.log(county)
+      
+       
 
     }
 

@@ -1,48 +1,58 @@
-import { types, flow } from 'mobx-state-tree'
+import { types, flow, t } from 'mobx-state-tree'
 import { createCrudStore } from '@/factories/StoreFactory'
 import { createBaseModel } from '@/factories/ModelFactory'
 import axios from 'axios'
+import TrafficCounty from './models/TrafficCounty'
+import Violation from './models/Violation'
+import TrafficCourt from './models/TrafficCourt'
+import Attorney from './models/Attorney'
 
 const PriceMap = createBaseModel('PriceMap', {
-  attorneyId: types.string,
+  id:types.optional(types.string,""),
+  attorney: types.maybeNull(Attorney),
   price: types.number,
-  courtId: types.maybeNull(types.string),
-  countyId: types.maybeNull(types.string),
-  violationId: types.maybeNull(types.string),
+  court: types.maybeNull(TrafficCourt),
+  county: types.maybeNull(TrafficCounty),
+  violation: types.maybeNull(Violation),
+
   pointsRange: types.optional(types.model({
     min: types.maybeNull(types.number),
     max: types.maybeNull(types.number)
-  }), { min: null, max: null })
+  },null), { min: null, max: null })
 })
 
 const transformMongoData = (data) => {
+  let attorneyaux = data.attorney
+  attorneyaux.id = data.attorney._id
+  
   return {
     id: data._id,
-    attorneyId: data.attorneyId,
+    attorney: attorneyaux,
     price: data.price,
-    courtId: data.courtId || null,
-    countyId: data.countyId || null,
-    violationId: data.violationId || null,
+    court: data.court ,
+    county: data.county,
+    violation: data.violation || null,
     pointsRange: {
       min: data.pointsRange?.min || null,
       max: data.pointsRange?.max || null
     },
-    createdAt: new Date(data.createdAt),
-    updatedAt: new Date(data.updatedAt)
+
   }
 }
 
 const AttorneyPriceStore = createCrudStore('AttorneyPriceStore', PriceMap, '/api/attorney-prices')
   .views(self => ({
     getPriceMapForAttorney(attorneyId) {
-      return self.items.filter(price => price.attorneyId === attorneyId)
+      return self.items.filter(price =>{ 
+    
+        return price.attorney.id === attorneyId})
     }
   }))
   .actions(self => ({
     fetchPriceMap: flow(function* (attorneyId) {
       self.setLoading(true)
       try {
-        const response = yield axios.get(`/api/attorney-prices?attorneyId=${attorneyId}`)
+        const response = yield axios.get(`/api/attorney-prices/${attorneyId}`)
         // Remplacer uniquement les prix pour cet avocat
         const newPrices = response.data.map(transformMongoData)
         const otherPrices = self.items.filter(price => price.attorneyId !== attorneyId)
@@ -56,12 +66,14 @@ const AttorneyPriceStore = createCrudStore('AttorneyPriceStore', PriceMap, '/api
       }
     }),
 
-    createPrice: flow(function* (data) {
+    createPrice:  async (data) =>{
       self.setLoading(true)
       try {
-        const response = yield axios.post('/api/attorney-prices', data)
+        
+        const response =await  axios.post('/api/attorney-prices', data)
+  
         const transformedData = transformMongoData(response.data)
-        self.items.push(transformedData)
+        self.add(transformedData)
         self.setError(null)
         return transformedData
       } catch (error) {
@@ -71,7 +83,7 @@ const AttorneyPriceStore = createCrudStore('AttorneyPriceStore', PriceMap, '/api
       } finally {
         self.setLoading(false)
       }
-    }),
+    },
 
     deletePrice: flow(function* (priceId) {
       self.setLoading(true)

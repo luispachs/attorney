@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     case 'GET':
       try {
         const court = await TrafficCourt.findById(id).populate('trafficCounty')
-        console.log(court);
+     
         if (!court) {
           return res.status(404).json({ error: 'Traffic court not found' })
         }

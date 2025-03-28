@@ -12,6 +12,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit'
 
 const AttorneyList = observer(({ attorneys, onEdit, onToggle, onSelect, selectedId }) => {
+
   return (
     <Paper>
       <List>
