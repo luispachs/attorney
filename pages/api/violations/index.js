@@ -1,5 +1,5 @@
 import dbConnect from '@/lib/dbConnect'
-import Violation from '@/models/Violation'
+import Violation from '@/db-schemas/Violation'
 
 export default async function handler(req, res) {
   await dbConnect()
@@ -10,6 +10,7 @@ export default async function handler(req, res) {
         const violations = await Violation.find({})
         res.status(200).json(violations)
       } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Failed to fetch violations' })
       }
       break
@@ -17,8 +18,10 @@ export default async function handler(req, res) {
     case 'POST':
       try {
         const violation = await Violation.create(req.body)
-        res.status(201).json(violation)
+        console.log(violation)
+        res.status(201).json({message:"",data:{violation}})
       } catch (error) {
+        
         res.status(400).json({ error: 'Failed to create violation' })
       }
       break

@@ -1,9 +1,13 @@
 import { Component } from 'react'
 import { inject, observer } from 'mobx-react'
-import { Box, Typography, Button, CircularProgress, Grid } from '@mui/material'
+import { Box, Typography, Button, CircularProgress, Grid, Tooltip, Stack } from '@mui/material'
 import AttorneyList from '@/components/AttorneyList'
 import AttorneyDialog from '@/components/AttorneyDialog'
 import PriceMapPanel from '@/components/PriceMapPanel'
+import Link from 'next/link'
+import FlagIcon from '@mui/icons-material/Flag';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
 
 @inject('store')
 @observer
@@ -88,6 +92,8 @@ class AttorneysPanelPage extends Component {
     }
   }
 
+  
+
   render() {
     const { attorney } = this.props.store
     const { items: attorneys, loading, error } = attorney
@@ -115,13 +121,32 @@ class AttorneysPanelPage extends Component {
           <Grid item xs={12} md={selectedAttorneyId ? 6 : 12}>
             <Box display="flex" justifyContent="space-between" mb={4}>
               <Typography variant="h4">Attorneys</Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => this.handleOpenDialog()}
-              >
-                Add Attorney
-              </Button>
+              <Stack direction={"row"} spacing={2}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.handleOpenDialog()}>
+                  Add Attorney
+                </Button>
+
+                <Tooltip title="Add Court">
+                  <Link href={"/courts-panel"}>
+                    <AccountBalanceIcon/>
+                  </Link>
+                </Tooltip>
+
+                <Tooltip title="Add County">
+                  <Link href={"/county-panel"}>
+                    <FlagIcon/>
+                  </Link>
+                </Tooltip>
+                <Tooltip title="Add Violations">
+                  <Link href={"/violations-panel"}>
+                    <CrisisAlertIcon/>
+                  </Link>
+                </Tooltip>
+              </Stack>
+
             </Box>
             <AttorneyList 
               attorneys={attorneys} 

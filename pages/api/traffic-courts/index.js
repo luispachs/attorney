@@ -1,5 +1,5 @@
 import dbConnect from '@/lib/dbConnect'
-import TrafficCourt from '@/models/TrafficCourt'
+import TrafficCourt from '@/db-schemas/TrafficCourt'
 
 export default async function handler(req, res) {
   await dbConnect()
@@ -7,9 +7,10 @@ export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        const courts = await TrafficCourt.find({}).populate('countyId')
+        const courts = await TrafficCourt.find({}).populate('trafficCounty').exec()
         res.status(200).json(courts)
       } catch (error) {
+        console.log(error)
         res.status(500).json({ error: 'Failed to fetch traffic courts' })
       }
       break
@@ -17,8 +18,10 @@ export default async function handler(req, res) {
     case 'POST':
       try {
         const court = await TrafficCourt.create(req.body)
-        res.status(201).json(court)
+        let courtWithCounty = await TrafficCourt.findById(court._id).populate("trafficCounty")
+        res.status(201).json({message:"Creation Successfull",data:{court:courtWithCounty}})
       } catch (error) {
+        console.log(error);
         res.status(400).json({ error: 'Failed to create traffic court' })
       }
       break

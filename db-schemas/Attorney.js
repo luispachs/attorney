@@ -22,4 +22,4 @@ const AttorneySchema = new mongoose.Schema({
   },
 })
 
-export default mongoose.model('Attorney', AttorneySchema)
+export default mongoose.models.Attorney ||  mongoose.model('Attorney', AttorneySchema)

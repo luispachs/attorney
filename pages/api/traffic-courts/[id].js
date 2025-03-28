@@ -1,5 +1,6 @@
 import dbConnect from '@/lib/dbConnect'
-import TrafficCourt from '@/models/TrafficCourt'
+import TrafficCourt from '@/db-schemas/TrafficCourt'
+import TrafficCounty from '@/db-schemas/TrafficCounty'
 
 export default async function handler(req, res) {
   const { id } = req.query
@@ -8,7 +9,8 @@ export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        const court = await TrafficCourt.findById(id).populate('countyId')
+        const court = await TrafficCourt.findById(id).populate('trafficCounty')
+        console.log(court);
         if (!court) {
           return res.status(404).json({ error: 'Traffic court not found' })
         }
@@ -20,14 +22,23 @@ export default async function handler(req, res) {
 
     case 'PUT':
       try {
-        const court = await TrafficCourt.findByIdAndUpdate(id, req.body, {
+  
+        let body = {
+          name:req.body.name,
+          address:req.body.address,
+          enabled:req.body.enabled,
+          TrafficCounty:req.body.TrafficCounty
+        }
+        const court = await TrafficCourt.findByIdAndUpdate(id, body, {
           new: true,
           runValidators: true
         })
         if (!court) {
           return res.status(404).json({ error: 'Traffic court not found' })
         }
-        res.status(200).json(court)
+        let courtWithCounty = await TrafficCourt.findById(id).populate("trafficCounty");
+        
+        res.status(200).json({message:"Update Successfull",data:{court:courtWithCounty}})
       } catch (error) {
         res.status(400).json({ error: 'Failed to update traffic court' })
       }
@@ -39,7 +50,7 @@ export default async function handler(req, res) {
         if (!court) {
           return res.status(404).json({ error: 'Traffic court not found' })
         }
-        res.status(200).json({ message: 'Traffic court deleted successfully' })
+        res.status(200).json({ message: 'Traffic court deleted successfully',data:{id} })
       } catch (error) {
         res.status(500).json({ error: 'Failed to delete traffic court' })
       }

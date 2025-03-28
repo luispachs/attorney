@@ -2,6 +2,7 @@
 import { Provider } from 'mobx-react'
 import { useEffect, useState, useMemo } from 'react'
 import RootStore from '@/stores/RootStore'
+import Head from 'next/head'
 // Theme
 import ThemeProvider from '@/stores/providers/ThemeProvider'
 
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }) {
   // Créer le store une seule fois avec useMemo
   const store = useMemo(() => RootStore.create(), [])
   const [isStoreReady, setIsStoreReady] = useState(false)
+  const getLayout = Component.getLayout ?? ((page) => page)
 
   useEffect(() => {
     const initializeStore = async () => {
@@ -33,8 +35,11 @@ function MyApp({ Component, pageProps }) {
     store
   }
 
-  return (
+  return getLayout(
     <Provider {...storeProps}>
+      <Head>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
       <ThemeProvider>
         <Component {...pageProps} />
       </ThemeProvider>

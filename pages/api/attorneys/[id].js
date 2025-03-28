@@ -1,5 +1,5 @@
 import dbConnect from '@/lib/dbConnect'
-import Attorney from '@/models/Attorney'
+import Attorney from '@/db-schemas/Attorney'
 
 export default async function handler(req, res) {
   const { id } = req.query

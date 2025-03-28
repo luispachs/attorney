@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import TrafficCounty from './TrafficCounty'
 
 const TrafficCourtSchema = new mongoose.Schema({
   name: {
@@ -11,22 +12,14 @@ const TrafficCourtSchema = new mongoose.Schema({
   },
   trafficCounty: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'TrafficCounty',
-    required: true,
-  },
-  trafficState: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'TrafficState',
-    required: true,
-  },
-  stateShortName: {
-    type: String,
+    ref: TrafficCounty.modelName,
     required: true,
   },
   enabled: {
     type: Boolean,
+    alias:'state',
     default: true,
   },
 })
 
-export default mongoose.model('TrafficCourt', TrafficCourtSchema)
+export default mongoose.models.TrafficCourt ||  mongoose.model('TrafficCourt', TrafficCourtSchema)

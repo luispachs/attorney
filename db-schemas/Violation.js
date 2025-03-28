@@ -6,10 +6,15 @@ const ViolationSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  points: {
-    type: Number,
-    required: true,
+  code:{
+    type:String,
+    required:true,
+    unique:true
+  },
+  description:{
+    type:String,
+    required:true
   },
 })
 
-export default mongoose.model('Violation', ViolationSchema)
+export default mongoose.models.Violation || mongoose.model('Violation', ViolationSchema)

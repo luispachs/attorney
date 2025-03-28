@@ -1,5 +1,5 @@
 import dbConnect from '@/lib/dbConnect'
-import TrafficCounty from '@/models/TrafficCounty'
+import TrafficCounty from '@/db-schemas/TrafficCounty'
 
 export default async function handler(req, res) {
   await dbConnect()

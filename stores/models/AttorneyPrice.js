@@ -12,7 +12,7 @@ const PriceEntry = types
     countyId: types.maybe(types.string),
     violationId: types.maybe(types.string),
     pointsRange: types.maybe(PointsRange),
-    price: types.number
+    price: types.number,
   })
   .views(self => ({
     get displayRange() {

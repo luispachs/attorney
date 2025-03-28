@@ -28,4 +28,4 @@ const AttorneyPriceMapSchema = new mongoose.Schema({
   },
 })
 
-export default mongoose.model('AttorneyPriceMap', AttorneyPriceMapSchema)
+export default mongoose.models.AttorneyPriceMap ||  mongoose.model('AttorneyPriceMap', AttorneyPriceMapSchema)
